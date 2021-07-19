@@ -4,13 +4,13 @@ package com.cognixia.jump.JavaFinalProject.project;
 import java.io.BufferedReader;
 
 
-import java.io.BufferedWriter;
+//import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import java.util.ArrayList;
 //import java.util.Collection;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+//import java.util.stream.Stream;
 
 //import com.sun.org.apache.xerces.internal.xs.StringList;
 
@@ -95,8 +95,6 @@ public class EmployeeManagementSystem {
 
 		File file = null;
 		FileWriter fileWriter = null;
-		BufferedWriter bufferedWriter = null;
-		PrintWriter printWriter = null;
 
 		try {
 
@@ -411,7 +409,6 @@ public class EmployeeManagementSystem {
 //					.collect(Collectors.toMap(map->map.getKey(),map->map.getValue()));
 //		System.out.println(result);
 //		
-			
 	}
 	
 	public static void displayEmployeeIds() {
