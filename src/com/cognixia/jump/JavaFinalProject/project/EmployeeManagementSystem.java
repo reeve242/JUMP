@@ -2,6 +2,8 @@
 package com.cognixia.jump.JavaFinalProject.project;
 
 import java.io.BufferedReader;
+
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,10 +31,9 @@ public class EmployeeManagementSystem {
 	static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		// grab data list from txt file
 		fileReader(txtFile);
-		//System.out.println("hi");
+		
 		// immediately put data in csv file for manipulation
 		fileWriter(csvFile);
 
@@ -51,12 +52,9 @@ public class EmployeeManagementSystem {
 			fileReader = new FileReader(fileName);
 			bufferedReader = new BufferedReader(fileReader);
 
-			// System.out.println("** CONTENTS OF 'employee.txt' **\n");
-
 			String line;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				System.out.println(line);
 				String[] data = line.split(",");
 
 				// grab data from inputed string and make a new employee object
@@ -92,6 +90,7 @@ public class EmployeeManagementSystem {
 			}
 		}
 	} // fileReader Method
+	
 	public static void fileWriter(String fileName) {
 
 		File file = null;
@@ -103,35 +102,16 @@ public class EmployeeManagementSystem {
 
 			file = new File(fileName);
 
-//			if (file.createNewFile()) {
-//				System.out.println("SUCCESS: employee.csv created");
-//			} else {
-//				System.out.println("FAILURE: employee.csv NOT created");
-//			}
 			file.createNewFile();
 
-			// They wrap into each other: printW> bufferedW> fileW
-			fileWriter = new FileWriter(file, false);
-			//bufferedWriter = new BufferedWriter(fileWriter);
-			//printWriter = new PrintWriter(bufferedWriter);
-
-			
+			fileWriter = new FileWriter(file, false);			
 			
 			writeToFile(fileWriter);
-			//appendToFile(bufferedWriter, "Hi");
-			//writeUsingPrintWriter(printWriter, "Hello World");
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 
-//			if (bufferedWriter != null) {
-//				try {
-//					bufferedWriter.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
 			if (fileWriter != null) {
 				try {
 					fileWriter.close();
@@ -139,16 +119,11 @@ public class EmployeeManagementSystem {
 					e.printStackTrace();
 				}
 			}
-//			if (printWriter != null) {
-//				printWriter.close();
-//
-//			}
 
 		} // finally
 
 	} // fileWriter method
 	public static void writeToFile(FileWriter writer) throws IOException {
-		// change content ======================================================
 		for (Employee emp : employeeList) {
 			StringBuffer sb = new StringBuffer();
 			sb.append(emp.getId());
@@ -167,24 +142,8 @@ public class EmployeeManagementSystem {
 		
 
 	} // writeToFile
-
-	public static void appendToFile(BufferedWriter writer, String str) throws IOException {
-		// change content ====================================================
-		for (int i = 0; i < 3; i++) {
-			writer.append(str);
-		}
-	} //append to file
-
-	public static void writeUsingPrintWrite(PrintWriter writer, String str) {
-		// change content ======================================================
-		writer.println();
-		writer.print(str);
-		writer.println(str);
-
-	} // writeUsingPrintWrite
 	
 	public static void inputPrompt() {
-		//System.out.println("Select an option of the Employee Management System: \n1.Add Employee\n2.Update Employee\n3.Remove Employee\n4.List Employee Information\n5.Save and Exit\n");
 		
 		try {
 			boolean stillInput=true;
@@ -200,9 +159,8 @@ public class EmployeeManagementSystem {
 				sb.append("6.Display Employee Ids\n");
 				sb.append("7.Save and Exit\n");
 				System.out.println(sb);
-				//Scanner sc = new Scanner(System.in);
+				
 				int userInput = sc.nextInt();
-				//System.out.println("CHOSE OPTION : "+ userInput);
 
 				//switch statement for options
 				switch(userInput) {
@@ -223,20 +181,22 @@ public class EmployeeManagementSystem {
 						listEmployeeInfo();
 						break;
 					case 5: 
+						//DISPLAY DEPARTMENT INFO
 						displayDepartmentList();
+						break;
 					case 6: 
+						//DISPLAY EMPLOYEE IDS
 						displayEmployeeIds();
 						break;
 					case 7: 
-						//save info and be done
+						//SAVE INFO AND BE DONE
 						stillInput=false;
 						fileWriter(csvFile);
 						fileWriter(txtFile);
-						//System.out.println("Wrote to file and done with program");
-						//sc.close();
+						System.out.println("COMPLETION: Employee Management System Managed.");
 						break;
 					default: 
-						System.out.println("Did not select an available selection from the list, please try again\n1. Add Employee\n2.Update Employee\n3.Remove Employee\n4.List Employee Information\n5.Save and Exit\n");
+						System.out.println("Did not select an available selection from the list, please try again\n"+sb);
 						break;
 						
 				}//switch
@@ -251,7 +211,6 @@ public class EmployeeManagementSystem {
 	public static void addEmployee() {
 		try {
 			//ID
-			//Scanner scId = new Scanner(System.in);
 			System.out.println("Enter employee id");
 			int empId=0;
 			try {
@@ -263,38 +222,54 @@ public class EmployeeManagementSystem {
 			//scId.close();
 			
 			//FIRST NAME
-			//Scanner scFn = new Scanner(System.in);
 			System.out.println("Enter employee's first name");
-			String empFn = sc.next();
-			//scFn.close();
+			String empFn;
+			try {
+				empFn = sc.next();
+			}catch(InputMismatchException in) {
+				System.out.println("Please enter a valid name");
+				return;
+			}
 			
 			//LAST NAME
-			//Scanner scLn = new Scanner(System.in);
 			System.out.println("Enter employee's last name");
-			String empLn = sc.next();
-			//scLn.close();
+			String empLn;
+			try {
+				empLn=sc.next();
+			}catch(InputMismatchException in) {
+				System.out.println("Please enter a valid name");
+				return;
+			}
 			
 			//AGE
-			//Scanner scAge = new Scanner(System.in);
 			System.out.println("Enter employee's age");
-			int empAge = sc.nextInt();
-			//scAge.close();
+			int empAge=0;
+			try {
+				empAge=sc.nextInt();
+			}catch(InputMismatchException in) {
+				System.out.println("Please enter a valid age");
+			}
 			
 			//SALARY
-			//Scanner scSal = new Scanner(System.in);
 			System.out.println("Enter employee's salary");
-			int empSal = sc.nextInt();
-			//scSal.close();
+			int empSal=0;
+			try {
+				empSal=sc.nextInt();
+			}catch(InputMismatchException in) {
+				System.out.println("Please enter a valid salary");
+			}
 			
 			//DEPARTMENT
-			//Scanner scDep = new Scanner(System.in);
 			System.out.println("Enter employee's department");
-			String empDep = sc.next();
-			//scDep.close();
-			System.out.println("DDD " + empId);
+			String empDep="";
+			try {
+				empDep=sc.next();
+			}catch(InputMismatchException in) {
+				System.out.println("Please enter a valid department");
+			}
+
 			Employee e = new Employee(empId, empFn, empLn, empAge, empSal, empDep);
 			employeeList.add(e);
-			System.out.println(employeeList);
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -304,13 +279,11 @@ public class EmployeeManagementSystem {
 	
 	public static void updateEmployee() {
 		try {
-			//Scanner scId = new Scanner(System.in);
 			System.out.println("-------------------------------------------------------\nEnter employee's ID number to update their info");
 			int empId = sc.nextInt();
 			for (Employee emp : employeeList) {
 				if(emp.getId()== empId) {
 					//ask for updates in switch statement
-					//System.out.println("Select an option to update an employee: \n1.Update first name\n2.Update last name\n3.Update age\n4.Update salary\n5.Update department\n6.Finish update\n");
 					boolean stillInput=true;
 					while(stillInput) {
 						StringBuffer sb = new StringBuffer();
@@ -323,74 +296,61 @@ public class EmployeeManagementSystem {
 						sb.append("5.Update department\n");
 						sb.append("6.Finish Update\n");
 						System.out.println(sb);
-						//Scanner sc = new Scanner(System.in);
 						int userInput = sc.nextInt();
 
 						//switch statement for options
 						switch(userInput) {
 							case 1: 
 								//UPDATE FIRST NAME
-								//Scanner scFn= new Scanner(System.in);
 								System.out.println("Enter employee's first name");
 								String empFn = sc.next();
 								emp.setFirstName(empFn);
-								//scFn.close();
 								break;
 							case 2: 
 								//UPDATE LAST NAME
-								//Scanner scLn= new Scanner(System.in);
 								System.out.println("Enter employee's last name");
 								String empLn = sc.next();
 								emp.setLastName(empLn);
-								//scLn.close();
 								break;
 							case 3: 
 								//UPDATE AGE
-								//Scanner scAge= new Scanner(System.in);
 								System.out.println("Enter employee's age");
 								int empAge = sc.nextInt();
 								emp.setAge(empAge);
-								//scAge.close();
 								break;
 							case 4: 
 								//UPDATE SALARY
-								//Scanner scSal= new Scanner(System.in);
 								System.out.println("Enter employee's salary");
 								int empSal = sc.nextInt();
 								emp.setSalary(empSal);
-								//scSal.close();
 								break;
 							case 5: 
 								//UPDATE DEPARTMENT
-								//Scanner scDep= new Scanner(System.in);
 								System.out.println("Enter employee's department");
 								String empDep = sc.next();
 								emp.setDepartment(empDep);
-								//scDep.close();
 								break;
 							case 6: 
 								//SAVE AND CLOSE
 								stillInput=false;
 								System.out.println("Successfully updated employee: "+ emp.getFirstName() + " "+ emp.getLastName()+"\n");
 								System.out.println("-------------------------------------------------------");
-								//scId.close();
 								break;
 							default: 
-								System.out.println("Did not select an available selection from the list, please try again\nSelect an option to update an employee: \n1. Update first name\n2.Update last name\n3.Update age\n4.Update salary\n5.Update department\n6.Finish update\n");
+								System.out.println("Did not select an available selection from the list, please try again\n"+sb);
 								break;
 								
 						}//switch
 					}//while
 				}
-			}
-			//switch statement with scanner
+			}//switch statement with scanner
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	} //update employee
+	
 	public static void removeEmployee() {
 		try {
-			//Scanner scId = new Scanner(System.in);
 			System.out.println("Enter employee's ID number to remove");
 			int empId = sc.nextInt();
 			for (Employee emp : employeeList) {
@@ -407,7 +367,6 @@ public class EmployeeManagementSystem {
 	
 	public static void listEmployeeInfo() {
 		try {
-			//Scanner scId = new Scanner(System.in);
 			System.out.println("Enter employee's ID to display their information");
 			int empId = sc.nextInt();
 			for (Employee emp : employeeList) {
@@ -441,19 +400,18 @@ public class EmployeeManagementSystem {
 		depMap.entrySet().forEach(entry -> {
 			StringBuffer sb = new StringBuffer();
 			sb.append("-------------------------------------------------------\n");
-			sb.append("DEPARTMENT: "+ entry.getKey() + " \n");
+			sb.append("DEPARTMENT: "+ entry.getKey().toUpperCase() + " \n");
 			sb.append("EMPLOYEES: " + entry.getValue());
 		    System.out.println(sb);
 		});
 		
-		Map<String,String> result = (Map<String, String>) depMap.entrySet()
-					.stream()
-					//.filter(map->"it".equals(map.getKey()))
-					.collect(Collectors.toMap(map->map.getKey(),map->map.getValue()));
-		System.out.println(result);
-		
-		
-		
+//		Map<String,String> result = (Map<String, String>) depMap.entrySet()
+//					.stream()
+//					//.filter(map->"it".equals(map.getKey()))
+//					.collect(Collectors.toMap(map->map.getKey(),map->map.getValue()));
+//		System.out.println(result);
+//		
+			
 	}
 	
 	public static void displayEmployeeIds() {
