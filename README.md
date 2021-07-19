@@ -1,6 +1,6 @@
 # JUMP
 
-Implementation of an Employee Management System
+Caitlyn Reeves' Implementation of an Employee Management System
 
 The EMS can add new employees, update employee information, remove employees,
 list employee information, display department list, and display employee ids.
